@@ -26,6 +26,7 @@
     "fastify-multipart": "^1.0.6",
     "fastify-plugin": "^1.6.1",
     "fastify-swagger": "^2.5.0",
+    "joi": "^17.1.1",
     "jsonwebtoken": "^8.5.1",
     "make-promises-safe": "^5.1.0",
     "moment": "^2.26.0",

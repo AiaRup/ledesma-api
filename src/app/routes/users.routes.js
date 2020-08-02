@@ -1,5 +1,8 @@
+const Joi = require('joi');
+
 const { authentication, verifyUserRole } = require('../../helpers');
 const { BadRequest } = require('../errors');
+const { UserSchema } = require('../schemas');
 
 module.exports = function UsersRouter({ usersController }) {
   function ctrl(method) {
@@ -8,7 +11,7 @@ module.exports = function UsersRouter({ usersController }) {
     };
   }
 
-  function verifyHFRDrole(request, reply, done) {
+  function verifyAdminRole(request, reply, done) {
     if (!verifyUserRole(request, 'Admin')) {
       throw new BadRequest('Only user with Admin role can perform this action');
     }
@@ -19,9 +22,19 @@ module.exports = function UsersRouter({ usersController }) {
     fastify.addHook('onRequest', authentication);
 
     fastify.get('/', ctrl('search'));
-    fastify.get('/:id', ctrl('get'));
-    fastify.post('/', { preValidation: verifyHFRDrole }, ctrl('create'));
-    fastify.put('/:id', { preValidation: verifyHFRDrole }, ctrl('update'));
+    fastify.get(
+      '/:id',
+      { schema: UserSchema.get },
+      { schemaCompiler: schema => data => Joi.validate(data, schema) },
+      ctrl('get')
+    );
+    fastify.post(
+      '/',
+      { schema: UserSchema.get, preValidation: verifyAdminRole },
+      { schemaCompiler: schema => data => Joi.validate(data, schema) },
+      ctrl('create')
+    );
+    fastify.put('/:id', { preValidation: verifyAdminRole }, ctrl('update'));
     fastify.delete('/:id', ctrl('remove'));
   };
 };

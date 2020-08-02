@@ -1,0 +1,1 @@
+exports.UserSchema = require('./users');
