@@ -7,7 +7,7 @@ const get = {
   password: Joi.string()
     .required()
     .min(5),
-  employeeCode: Joi.string()
+  employeeCode: Joi.number()
     .required()
     .min(5)
 };
@@ -18,7 +18,7 @@ const create = {
     .min(2),
   email: Joi.string().email(),
   farms: Joi.array().required(),
-  employeeCode: Joi.string()
+  employeeCode: Joi.number()
     .required()
     .min(5)
 };
