@@ -2,6 +2,7 @@ const fastify = require('fastify');
 const cors = require('fastify-cors');
 const compress = require('fastify-compress');
 const multipart = require('fastify-multipart');
+const Joi = require('joi');
 
 require('make-promises-safe');
 
@@ -56,6 +57,8 @@ class Server {
     this.fastify.register(router);
     // Decorate fastify instance with empty user
     this.fastify.decorateRequest('user', { payload: {} });
+
+    this.fastify.schemaCompiler = schema => data => Joi.validate(data, schema);
 
     // Register plugins
     Object.values(plugins).forEach(plugin => {
