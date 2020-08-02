@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "airbnb-base",
+    "plugin:promise/recommended",
+    "plugin:node/recommended",
+    "prettier"
+  ],
+  "env": {
+    "jest/globals": true
+  },
+  "plugins": ["promise", "node", "jest"],
+  "rules": {
+    "global-require": "off",
+    "linebreak-style": "off",
+    "promise/avoid-new": "off",
+    "func-names": "off",
+    "node/no-unpublished-require": "off",
+    "node/no-unsupported-features/es-syntax": "warn",
+    "class-methods-use-this": "off",
+    "consistent-return": "off",
+    "no-use-before-define": "off",
+    "arrow-body-style": "warn",
+    "no-underscore-dangle": "off",
+    "no-process-exit": "off"
+  },
+  "globals": {
+    "app": true,
+    "duringRequests": true,
+    "inspect": true
+  }
+}
