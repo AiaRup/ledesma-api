@@ -26,6 +26,7 @@ module.exports = function UsersRouter({ usersController }) {
       { schema: UserSchema.get, preValidation: verifyAdminRole },
       ctrl('create')
     );
+    fastify.post('/login', ctrl('login'));
     fastify.put('/:id', ctrl('update'));
     fastify.delete('/:id', ctrl('remove'));
   };

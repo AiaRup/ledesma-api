@@ -15,11 +15,10 @@ function UsersService({ UserModel, config }) {
   async function search({
     field,
     sortDirection,
-    unitId,
     page,
     limit,
     active,
-    ...rest
+    ...query
   }) {
     const options = {
       page: page || defaultPage,
@@ -29,10 +28,9 @@ function UsersService({ UserModel, config }) {
         : defaultSort,
       populate: ['farms'],
       lean: true,
-      leanWithId: false,
-      ...rest
+      leanWithId: false
     };
-    const users = await UserModel.paginate({}, options);
+    const users = await UserModel.paginate({ ...query }, options);
 
     return users;
   }
