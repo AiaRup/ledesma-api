@@ -27,6 +27,7 @@ module.exports = function UsersRouter({ usersController }) {
       ctrl('create')
     );
     fastify.post('/login', ctrl('login'));
+    fastify.post('/signup', ctrl('signup'));
     fastify.put('/:id', ctrl('update'));
     fastify.delete('/:id', ctrl('remove'));
   };

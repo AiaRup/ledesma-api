@@ -64,6 +64,22 @@ function UsersService({ UserModel, config }) {
     return nodeCreated.toObject();
   }
 
+  async function signup(employeeCode, nodeData) {
+    const user = await UserModel.findOneAndUpdate(
+      { employeeCode },
+      { $set: objectToDotNotation(nodeData) },
+      { new: true }
+    )
+      .populate(['farms'])
+      .lean();
+
+    if (!user) {
+      throw new EntityNotFoundError(employeeCode);
+    }
+
+    return user;
+  }
+
   async function update(id, nodeData) {
     const user = await UserModel.findOneAndUpdate(
       { _id: id },
@@ -91,7 +107,8 @@ function UsersService({ UserModel, config }) {
     get,
     create,
     update,
-    remove
+    remove,
+    signup
   };
 }
 

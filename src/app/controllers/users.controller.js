@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 function UsersController({ config, usersService }) {
   return {
@@ -47,6 +48,42 @@ function UsersController({ config, usersService }) {
       reply.send(token);
     },
 
+    signup: async (request, reply) => {
+      const { employeeCode, password, adminPassword } = request.body;
+
+      if (!employeeCode || !password || !adminPassword) {
+        return reply
+          .status(400)
+          .send({ error: 'Invalid password/admin Password/employee code.' });
+      }
+
+      const users =
+        (employeeCode && (await usersService.search({ employeeCode }))) || [];
+
+      if (!users.docs.length) {
+        return reply
+          .status(400)
+          .send({ error: 'Ask your manager to create an account for you.' });
+      }
+
+      if (users.docs[0].adminPassword !== adminPassword) {
+        return reply
+          .status(400)
+          .send({ error: 'Admin password is not correct.' });
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const entity = {
+        ...request.body,
+        password: await bcrypt.hash(password, salt),
+        updatedAt: new Date().toISOString()
+      };
+
+      const user = await usersService.signup(employeeCode, entity);
+
+      reply.send(user);
+    },
+
     update: async (request, reply) => {
       const { employeeCode, password, name } = request.body;
 
@@ -88,12 +125,16 @@ function UsersController({ config, usersService }) {
       }
 
       const { docs: users = [] } = await usersService.search({
-        employeeCode,
-        password
+        employeeCode
       });
 
       if (!users.length) {
         return reply.status(400).send({ error: 'User does not exist.' });
+      }
+
+      const isMatch = await bcrypt.compare(password, users[0].password);
+      if (!isMatch) {
+        return reply.status(400).send({ error: 'Incorrect Password.' });
       }
 
       const token = jwt.sign({ ...users[0] }, config.auth.JWT_SECRET);
