@@ -137,7 +137,9 @@ function UsersController({ config, usersService }) {
         return reply.status(400).send({ error: 'Incorrect Password.' });
       }
 
-      const token = jwt.sign({ ...users[0] }, config.auth.JWT_SECRET);
+      const token = jwt.sign({ ...users[0] }, config.auth.JWT_SECRET, {
+        expiresIn: '9h'
+      });
 
       reply.send(token);
     }
