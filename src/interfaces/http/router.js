@@ -2,7 +2,7 @@ const swagger = require('fastify-swagger');
 
 const { web } = require('../../../config');
 
-module.exports = ({ usersRouter, listingsRouter }) =>
+module.exports = ({ usersRouter, listingsRouter, farmsRouter }) =>
   async function(fastify, _, next) {
     fastify
       .register(swagger, {
@@ -23,6 +23,9 @@ module.exports = ({ usersRouter, listingsRouter }) =>
       })
       .register(listingsRouter, {
         prefix: '/listings'
+      })
+      .register(farmsRouter, {
+        prefix: '/farms'
       })
       .get('/version', { schema: { tags: ['Version'] } }, (req, reply) => {
         reply.send(web.artifact);
