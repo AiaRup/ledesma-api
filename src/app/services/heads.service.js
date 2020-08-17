@@ -4,7 +4,7 @@ const {
 } = require('../errors');
 const { objectToDotNotation } = require('../../helpers');
 
-function UsersService({ UserModel, config }) {
+function HeadsService({ HeadsModel, config }) {
   const {
     page: defaultPage,
     limit: defaultLimit,
@@ -27,26 +27,25 @@ function UsersService({ UserModel, config }) {
         ? { [field]: sortDirection || defaultDirection }
         : defaultSort,
       lean: true,
-      leanWithId: false
+      leanWithId: false,
+      populate: ['farm', 'users']
     };
-    const users = await UserModel.paginate({ ...query }, options);
+    const heads = await HeadsModel.paginate({ ...query }, options);
 
-    return users;
+    return heads;
   }
 
   async function get({ id }) {
-    const user = await UserModel.findOne({ _id: id })
-      .populate(['farms'])
-      .lean();
-    if (!user) {
+    const head = await HeadsModel.findOne({ _id: id }).lean();
+    if (!head) {
       throw new EntityNotFoundError(id);
     }
 
-    return user;
+    return head;
   }
 
   async function create(nodeData) {
-    const modelObject = await UserModel;
+    const modelObject = await HeadsModel;
 
     let nodeCreated = null;
 
@@ -63,36 +62,24 @@ function UsersService({ UserModel, config }) {
     return nodeCreated.toObject();
   }
 
-  async function signup(employeeCode, nodeData) {
-    const user = await UserModel.findOneAndUpdate(
-      { employeeCode },
-      { $set: objectToDotNotation(nodeData) },
-      { new: true }
-    ).lean();
-
-    if (!user) {
-      throw new EntityNotFoundError(employeeCode);
-    }
-
-    return user;
-  }
-
   async function update(id, nodeData) {
-    const user = await UserModel.findOneAndUpdate(
+    const head = await HeadsModel.findOneAndUpdate(
       { _id: id },
       { $set: objectToDotNotation(nodeData) },
       { new: true }
-    ).lean();
+    )
+      .populate(['farm', 'users'])
+      .lean();
 
-    if (!user) {
+    if (!head) {
       throw new EntityNotFoundError(id);
     }
 
-    return user;
+    return head;
   }
 
   async function remove(_id) {
-    const result = await UserModel.deleteOne({ _id });
+    const result = await HeadsModel.deleteOne({ _id });
 
     return { _id, deleted: result.n > 0 };
   }
@@ -102,9 +89,8 @@ function UsersService({ UserModel, config }) {
     get,
     create,
     update,
-    remove,
-    signup
+    remove
   };
 }
 
-module.exports = UsersService;
+module.exports = HeadsService;
