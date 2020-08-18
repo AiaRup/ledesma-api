@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
-const objectId = Joi.objectId();
+const objectId = Joi.string().regex(/^[0-9a-fA-F]{24}$/, 'ObjectId');
+
 const headsProperties = {
   name: Joi.string(),
   farm: objectId,
