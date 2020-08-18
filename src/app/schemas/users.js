@@ -1,26 +1,32 @@
 const Joi = require('joi');
 
+const userProperties = {
+  name: Joi.string(),
+  password: Joi.string(),
+  employeeCode: Joi.number(),
+  email: Joi.string()
+};
+
 const get = {
-  name: Joi.string()
-    .required()
-    .min(2),
-  password: Joi.string()
-    .required()
-    .min(5),
-  employeeCode: Joi.number()
-    .required()
-    .min(5)
+  response: {
+    200: {
+      type: 'object',
+      properties: userProperties
+    }
+  }
 };
 
 const create = {
-  name: Joi.string()
-    .required()
-    .min(2),
-  email: Joi.string().email(),
-  farms: Joi.array().required(),
-  employeeCode: Joi.number()
-    .required()
-    .min(5)
+  body: {
+    type: 'object',
+    properties: userProperties
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: userProperties
+    }
+  }
 };
 
 exports.default = {

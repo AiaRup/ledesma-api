@@ -1,5 +1,5 @@
 const { authentication } = require('../../helpers');
-// const { HeadsSchema } = require('../schemas');
+const { HeadsSchema } = require('../schemas');
 
 module.exports = function HeadsRouter({ headsController }) {
   function ctrl(method) {
@@ -12,8 +12,8 @@ module.exports = function HeadsRouter({ headsController }) {
     fastify.addHook('onRequest', authentication);
 
     fastify.get('/', ctrl('search'));
-    fastify.get('/:id', ctrl('get'));
-    fastify.post('/', ctrl('create'));
+    fastify.get('/:id', { schema: HeadsSchema.get }, ctrl('get'));
+    fastify.post('/', { schema: HeadsSchema.get }, ctrl('create'));
     fastify.put('/:id', ctrl('update'));
     fastify.delete('/:id', ctrl('remove'));
   };

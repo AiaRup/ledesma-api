@@ -1,15 +1,31 @@
 const Joi = require('joi');
 
 const get = {
-  name: Joi.string()
-    .required()
-    .min(2)
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        name: Joi.string()
+      }
+    }
+  }
 };
 
 const create = {
-  name: Joi.string()
-    .required()
-    .min(2)
+  body: {
+    type: 'object',
+    properties: {
+      name: Joi.string().required()
+    }
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        name: Joi.string()
+      }
+    }
+  }
 };
 
 exports.default = {
