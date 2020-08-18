@@ -4,7 +4,7 @@ const {
 } = require('../errors');
 const { objectToDotNotation } = require('../../helpers');
 
-function FarmsService({ FarmsModel, config }) {
+function FarmsService({ FarmModel, config }) {
   const {
     page: defaultPage,
     limit: defaultLimit,
@@ -29,13 +29,13 @@ function FarmsService({ FarmsModel, config }) {
       lean: true,
       leanWithId: false
     };
-    const farms = await FarmsModel.paginate({ ...query }, options);
+    const farms = await FarmModel.paginate({ ...query }, options);
 
     return farms;
   }
 
   async function get({ id }) {
-    const farm = await FarmsModel.findOne({ _id: id }).lean();
+    const farm = await FarmModel.findOne({ _id: id }).lean();
     if (!farm) {
       throw new EntityNotFoundError(id);
     }
@@ -44,7 +44,7 @@ function FarmsService({ FarmsModel, config }) {
   }
 
   async function create(nodeData) {
-    const modelObject = await FarmsModel;
+    const modelObject = await FarmModel;
 
     let nodeCreated = null;
 
@@ -62,7 +62,7 @@ function FarmsService({ FarmsModel, config }) {
   }
 
   async function update(id, nodeData) {
-    const farm = await FarmsModel.findOneAndUpdate(
+    const farm = await FarmModel.findOneAndUpdate(
       { _id: id },
       { $set: objectToDotNotation(nodeData) },
       { new: true }
@@ -78,7 +78,7 @@ function FarmsService({ FarmsModel, config }) {
   }
 
   async function remove(_id) {
-    const result = await FarmsModel.deleteOne({ _id });
+    const result = await FarmModel.deleteOne({ _id });
 
     return { _id, deleted: result.n > 0 };
   }

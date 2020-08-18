@@ -1,5 +1,5 @@
 const { authentication } = require('../../helpers');
-// const { FarmsSchema } = require('../schemas');
+const { FarmsSchema } = require('../schemas');
 
 module.exports = function FarmsRouter({ farmsController }) {
   function ctrl(method) {
@@ -12,8 +12,8 @@ module.exports = function FarmsRouter({ farmsController }) {
     fastify.addHook('onRequest', authentication);
 
     fastify.get('/', ctrl('search'));
-    fastify.get('/:id', ctrl('get'));
-    fastify.post('/', ctrl('create'));
+    fastify.get('/:id', { schema: FarmsSchema.get }, ctrl('get'));
+    fastify.post('/', { schema: FarmsSchema.get }, ctrl('create'));
     fastify.put('/:id', ctrl('update'));
     fastify.delete('/:id', ctrl('remove'));
   };

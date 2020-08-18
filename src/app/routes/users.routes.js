@@ -1,6 +1,6 @@
 const { authentication, verifyUserRole } = require('../../helpers');
 const { BadRequest } = require('../errors');
-const { UserSchema } = require('../schemas');
+const { UsersSchema } = require('../schemas');
 
 module.exports = function UsersRouter({ usersController }) {
   function ctrl(method) {
@@ -20,10 +20,10 @@ module.exports = function UsersRouter({ usersController }) {
     fastify.addHook('onRequest', authentication);
 
     fastify.get('/', ctrl('search'));
-    fastify.get('/:id', { schema: UserSchema.get }, ctrl('get'));
+    fastify.get('/:id', { schema: UsersSchema.get }, ctrl('get'));
     fastify.post(
       '/',
-      { schema: UserSchema.get, preValidation: verifyAdminRole },
+      { schema: UsersSchema.get, preValidation: verifyAdminRole },
       ctrl('create')
     );
     fastify.post('/login', ctrl('login'));

@@ -4,7 +4,7 @@ const {
 } = require('../errors');
 const { objectToDotNotation } = require('../../helpers');
 
-function HeadsService({ HeadsModel, config }) {
+function HeadsService({ HeadModel, config }) {
   const {
     page: defaultPage,
     limit: defaultLimit,
@@ -30,13 +30,13 @@ function HeadsService({ HeadsModel, config }) {
       leanWithId: false,
       populate: ['farm', 'users']
     };
-    const heads = await HeadsModel.paginate({ ...query }, options);
+    const heads = await HeadModel.paginate({ ...query }, options);
 
     return heads;
   }
 
   async function get({ id }) {
-    const head = await HeadsModel.findOne({ _id: id }).lean();
+    const head = await HeadModel.findOne({ _id: id }).lean();
     if (!head) {
       throw new EntityNotFoundError(id);
     }
@@ -45,7 +45,7 @@ function HeadsService({ HeadsModel, config }) {
   }
 
   async function create(nodeData) {
-    const modelObject = await HeadsModel;
+    const modelObject = await HeadModel;
 
     let nodeCreated = null;
 
@@ -63,7 +63,7 @@ function HeadsService({ HeadsModel, config }) {
   }
 
   async function update(id, nodeData) {
-    const head = await HeadsModel.findOneAndUpdate(
+    const head = await HeadModel.findOneAndUpdate(
       { _id: id },
       { $set: objectToDotNotation(nodeData) },
       { new: true }
@@ -79,7 +79,7 @@ function HeadsService({ HeadsModel, config }) {
   }
 
   async function remove(_id) {
-    const result = await HeadsModel.deleteOne({ _id });
+    const result = await HeadModel.deleteOne({ _id });
 
     return { _id, deleted: result.n > 0 };
   }

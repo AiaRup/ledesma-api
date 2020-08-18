@@ -1,1 +1,2 @@
-exports.UserSchema = require('./users');
+exports.UsersSchema = require('./users');
+exports.FarmsSchema = require('./farms');
