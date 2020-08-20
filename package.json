@@ -8,8 +8,7 @@
     "develop": "env-cmd -f ./.env nodemon --exec node index.js",
     "lint": "eslint \"**/*.js\"",
     "format": "prettier --write \"**/*.js\"",
-    "precommit": "lint-staged && npm run test:unit",
-    "postinstall": "node initTempFolder.js"
+    "precommit": "lint-staged && npm run test:unit"
   },
   "author": "Aia Rupsom",
   "license": "ISC",
