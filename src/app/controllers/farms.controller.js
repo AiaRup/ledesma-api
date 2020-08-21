@@ -33,6 +33,12 @@ function farmsController({ farmsService }) {
       const farm = await farmsService.update(entity);
 
       reply.send(farm);
+    },
+
+    remove: async (request, reply) => {
+      const result = await farmsService.remove(request.params.id);
+
+      reply.type('text/json').send(result);
     }
   };
 }
