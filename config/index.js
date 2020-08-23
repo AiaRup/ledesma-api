@@ -9,7 +9,7 @@ module.exports = {
     artifact: artifactDetails,
     name: artifactDetails.name,
     version: artifactDetails.version,
-    port: process.env.SERVER_PORT || 9000
+    port: process.env.PORT || 9000
   },
   db: {
     MONGODB_URL: process.env.MONGODB_URL || 'mongodb://mongodb'
