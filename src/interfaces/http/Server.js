@@ -68,7 +68,7 @@ class Server {
 
   async start() {
     try {
-      await this.fastify.listen(this.config.web.port);
+      await this.fastify.listen(this.config.web.port, '0.0.0.0');
       await this.db.start();
     } catch (err) {
       throw new Error(err);
