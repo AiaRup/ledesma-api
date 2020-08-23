@@ -8,5 +8,6 @@
         "helpers": false
       }
     }
-  ]
+  ],
+  "routes": [{ "src": "/.*", "dest": "/.index.js" }]
 }
