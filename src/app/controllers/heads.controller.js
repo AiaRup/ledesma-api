@@ -30,7 +30,7 @@ function headsController({ headsService }) {
         updatedAt: new Date().toISOString()
       };
 
-      const head = await headsService.update(entity);
+      const head = await headsService.update(request.params.id, entity);
 
       reply.send(head);
     }

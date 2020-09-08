@@ -7,7 +7,7 @@ function farmsController({ farmsService }) {
     },
 
     search: async (request, reply) => {
-      const result =  await farmsService.search(request.query);
+      const result = await farmsService.search(request.query);
 
       reply.send(result);
     },
@@ -30,7 +30,7 @@ function farmsController({ farmsService }) {
         updatedAt: new Date().toISOString()
       };
 
-      const farm = await farmsService.update(entity);
+      const farm = await farmsService.update(request.params.id, entity);
 
       reply.send(farm);
     },

@@ -30,7 +30,7 @@ function ListingsController({ listingsService }) {
         updatedAt: new Date().toISOString()
       };
 
-      const listing = await listingsService.update(entity);
+      const listing = await listingsService.update(request.params.id, entity);
 
       reply.send(listing);
     }
