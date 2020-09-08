@@ -7,7 +7,7 @@ function farmsController({ farmsService }) {
     },
 
     search: async (request, reply) => {
-      const result = await farmsService.search(request.query);
+      const result =  await farmsService.search(request.query);
 
       reply.send(result);
     },

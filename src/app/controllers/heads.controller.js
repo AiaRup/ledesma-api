@@ -19,9 +19,9 @@ function headsController({ headsService }) {
         updatedAt: new Date().toISOString()
       };
 
-      const farm = await headsService.create(entity);
+      const head = await headsService.create(entity);
 
-      reply.send(farm);
+      reply.send(head);
     },
 
     update: async (request, reply) => {
@@ -30,9 +30,9 @@ function headsController({ headsService }) {
         updatedAt: new Date().toISOString()
       };
 
-      const farm = await headsService.update(entity);
+      const head = await headsService.update(entity);
 
-      reply.send(farm);
+      reply.send(head);
     }
   };
 }

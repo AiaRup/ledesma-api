@@ -17,7 +17,7 @@ module.exports = function UsersRouter({ usersController }) {
   }
 
   return async function(fastify) {
-    fastify.addHook('onRequest', authentication);
+    // fastify.addHook('onRequest', authentication);
 
     fastify.get('/', ctrl('search'));
     fastify.get('/:id', { schema: UsersSchema.get }, ctrl('get'));
