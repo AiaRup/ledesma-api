@@ -22,8 +22,8 @@ module.exports = {
     pageOptions: {
       page: 1,
       limit: 100,
-      sort: { createdAt: 1 },
-      sortDirection: 1
+      sort: { createdAt: -1 },
+      sortDirection: -1
     }
   }
 };
