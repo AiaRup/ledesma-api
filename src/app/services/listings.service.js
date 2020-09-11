@@ -27,7 +27,8 @@ function ListingsService({ ListingModel, config }) {
         ? { [field]: sortDirection || defaultDirection }
         : defaultSort,
       lean: true,
-      leanWithId: false
+      leanWithId: false,
+      populate: ['head']
     };
     const users = await ListingModel.paginate({ ...query }, options);
 
