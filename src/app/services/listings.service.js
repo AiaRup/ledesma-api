@@ -18,6 +18,7 @@ function ListingsService({ ListingModel, config }) {
     page,
     limit,
     active,
+    updatedAt,
     ...query
   }) {
     const options = {
