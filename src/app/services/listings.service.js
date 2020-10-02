@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const {
   EntityNotFoundError,
   EntityExistsUnprocessableEntityError
@@ -19,7 +21,7 @@ function ListingsService({ ListingModel, config }) {
     limit,
     active,
     updatedAt,
-    ...query
+    ...rest
   }) {
     const options = {
       page: page || defaultPage,
@@ -31,6 +33,16 @@ function ListingsService({ ListingModel, config }) {
       leanWithId: false,
       populate: ['head']
     };
+    let query = {};
+    if (updatedAt) {
+      query = {
+        ...rest,
+        updatedAt: {
+          $gte: moment(updatedAt, 'DD/MM/YYYY').startOf('day'),
+          $lte: moment(updatedAt, 'DD/MM/YYYY').endOf('day')
+        }
+      };
+    }
     const users = await ListingModel.paginate({ ...query }, options);
 
     return users;
