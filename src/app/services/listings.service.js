@@ -31,7 +31,7 @@ function ListingsService({ ListingModel, config }) {
         : defaultSort,
       lean: true,
       leanWithId: false,
-      populate: ['head']
+      populate: ['head', 'createdBy']
     };
     let query = {};
     if (updatedAt) {
@@ -72,7 +72,9 @@ function ListingsService({ ListingModel, config }) {
       throw error;
     });
 
-    nodeCreated = await nodeCreated.populate('head').execPopulate();
+    nodeCreated = await nodeCreated
+      .populate(['head', 'createdBy'])
+      .execPopulate();
 
     return nodeCreated.toObject();
   }
