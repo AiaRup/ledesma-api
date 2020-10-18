@@ -9,7 +9,7 @@ module.exports = function UsersRouter({ listingsController }) {
   }
 
   return async function(fastify) {
-    // fastify.addHook('onRequest', authentication);
+    fastify.addHook('onRequest', authentication);
 
     fastify.get('/', ctrl('search'));
     fastify.get('/:id', ctrl('get'));

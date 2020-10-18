@@ -7,7 +7,7 @@ async function authentication(req, res) {
     return res.status(401).send({ error: 'Access denied. No token provided.' });
 
   try {
-    const payload = jwt.verify(token, settings.JWT_SECRET);
+    const payload = jwt.verify(token, settings.auth.JWT_SECRET);
     req.user.payload = payload;
   } catch (err) {
     res.status(400).send({ error: 'Invalid token.' });

@@ -1,4 +1,4 @@
-const { authentication, verifyUserRole } = require('../../helpers');
+const { verifyUserRole } = require('../../helpers');
 const { BadRequest } = require('../errors');
 const { UsersSchema } = require('../schemas');
 
@@ -17,8 +17,6 @@ module.exports = function UsersRouter({ usersController }) {
   }
 
   return async function(fastify) {
-    // fastify.addHook('onRequest', authentication);
-
     fastify.get('/', ctrl('search'));
     fastify.get('/:id', { schema: UsersSchema.get }, ctrl('get'));
     fastify.post(
