@@ -72,7 +72,7 @@ function ListingsService({ ListingModel, config }) {
       throw error;
     });
 
-    nodeCreated = await nodeCreated.populate('head').execPopulate()
+    nodeCreated = await nodeCreated.populate('head').execPopulate();
 
     return nodeCreated.toObject();
   }
